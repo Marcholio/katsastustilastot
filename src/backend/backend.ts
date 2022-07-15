@@ -1,5 +1,6 @@
 import processedData from "../data/processed.json";
 import { median, sort } from "ramda";
+import { brands } from "./brands";
 
 // model -> car year -> inspection year -> stats
 const fullData = processedData as any as Record<
@@ -15,14 +16,32 @@ export type InspectionStats = {
   failCount: number;
 };
 
-export const getModels = (): string[] => Object.keys(fullData);
+export const getBrands = (): string[] => brands;
+
+export const getModels = (brand: string): string[] =>
+  Object.keys(fullData)
+    .filter((model) => model.startsWith(brand))
+    .map((model) => model.slice(brand.length + 1));
+
 export const getYears = (model: string): string[] =>
-  Object.keys(fullData[model]);
+  fullData[model]
+    ? Object.keys(fullData[model]).filter((year) =>
+        Object.values(fullData[model][year]).some((stat) => stat.count > 0)
+      )
+    : [];
 
 export const getData = (
   model: string,
   carYear: string | undefined
 ): InspectionStats[] => {
+  if (!fullData[model]) {
+    return Object.keys(fullData)
+      .filter((m) => m.startsWith(model))
+      .flatMap((m) =>
+        Object.values(fullData[m]).flatMap((val) => Object.values(val))
+      );
+  }
+
   if (carYear && carYear !== "0") {
     return Object.values(fullData[model][carYear]);
   }
@@ -51,9 +70,11 @@ export const getBaseline = (model: string | undefined) => {
       acc[key] = [];
     }
 
-    const perc = (cur.failCount / cur.count) * 100;
+    if (cur.count > 0) {
+      const perc = ((cur.failCount ?? 0) / cur.count) * 100;
 
-    acc[key].push(perc);
+      acc[key].push(perc);
+    }
     return acc;
   }, {} as Record<string, number[]>);
 
@@ -61,12 +82,21 @@ export const getBaseline = (model: string | undefined) => {
     (acc, [km, percentages]) =>
       Object.assign(acc, {
         [km]: {
-          med: median(percentages),
-          p75: percentile(percentages, 0.75),
-          p25: percentile(percentages, 0.25),
+          med: percentages.length > 0 ? median(percentages) : undefined,
+          p75:
+            percentages.length > 0 ? percentile(percentages, 0.75) : undefined,
+          p25:
+            percentages.length > 0 ? percentile(percentages, 0.25) : undefined,
         },
       }),
-    {} as Record<string, { med: number; p75: number; p25: number }>
+    {} as Record<
+      string,
+      {
+        med: number | undefined;
+        p75: number | undefined;
+        p25: number | undefined;
+      }
+    >
   );
 
   return baseLineData;

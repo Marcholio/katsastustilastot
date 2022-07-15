@@ -1,6 +1,5 @@
 import baseData from "../data/main.json" assert { type: "json" };
 import fs from "fs";
-import { InspectionStats } from "../backend/backend";
 
 const main = baseData as any;
 const nonSumRows = main.data.filter(
@@ -8,13 +7,14 @@ const nonSumRows = main.data.filter(
 );
 
 const processedData = nonSumRows
-  //.filter((r: any) => r.key[1].includes("Volkswagen"))
+  // .filter((r: any) => r.key[1].includes("BMW"))
+  .filter((r: any) => !isNaN(r.values[0]))
   .map((r: any) => ({
     inspectionYear: r.key[0],
     model: r.key[1],
     carYear: r.key[2],
     stat: r.key[3],
-    value: !isNaN(Number(r.values[0])) ? Number(r.values[0]) : 0,
+    value: Number(r.values[0]),
   }))
   .reduce((acc: any, row: any) => {
     const { model, inspectionYear, carYear } = row;
@@ -49,7 +49,7 @@ const processedData = nonSumRows
     }
 
     return acc;
-  }, {} as Record<string, InspectionStats>);
+  }, {});
 
 fs.writeFileSync(
   "./src/data/processed.json",

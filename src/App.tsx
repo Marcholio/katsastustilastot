@@ -1,59 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { getModels, getYears } from "./backend/backend";
-import SelectSearch from "react-select-search";
+import React, { useState } from "react";
 
 import "react-select-search/style.css";
 import "./App.css";
 import { Chart } from "./chart";
+import { Selector } from "./Selector";
+
+type SelectedCar = {
+  brand?: string;
+  model?: string;
+  year?: string;
+};
 
 function App() {
-  const models = getModels();
-  const modelOptions = models.map((model) => ({
-    name: model,
-    value: model,
-  }));
+  const [right, setRight] = useState<SelectedCar>({
+    brand: undefined,
+    model: undefined,
+    year: undefined,
+  });
 
-  const [model, setModel] = useState<string | undefined>(undefined);
-  const [years, setYears] = useState<string[]>([]);
-  const [carYear, setCarYear] = useState<string | undefined>(undefined);
-
-  const yearOptions = [...years, undefined].map((year) => ({
-    name: year ?? "Kaikki käyttöönottovuodet",
-    value: year ?? 0,
-  }));
-
-  useEffect(() => {
-    if (model) {
-      setYears(getYears(model));
-    }
-  }, [model]);
+  const [left, setLeft] = useState<SelectedCar>({
+    brand: undefined,
+    model: undefined,
+    year: undefined,
+  });
 
   return (
     <div className="App">
-      <SelectSearch
-        options={modelOptions}
-        placeholder="Valitse automalli"
-        search={true}
-        filterOptions={(opts) => (query: string) =>
-          opts.filter((o) =>
-            o.name.toLowerCase().includes(query.toLowerCase())
-          )}
-        onChange={(val) => {
-          setModel(val.toString());
-          setCarYear(undefined);
-        }}
-        value={model}
+      <Selector
+        brand={left.brand}
+        model={left.model}
+        year={left.year}
+        onChange={(val) => setLeft(val)}
       />
-      <SelectSearch
-        options={yearOptions}
-        placeholder="Valitse käyttöönottovuosi"
-        onChange={(val) => setCarYear(val.toString())}
-        value={carYear}
+      <h2>---</h2>
+      <Selector
+        brand={right.brand}
+        model={right.model}
+        year={right.year}
+        onChange={(val) => setRight(val)}
       />
-      <h1>
-        {model ?? ""} {carYear && carYear !== "0" ? carYear : ""}
-      </h1>
-      {model && <Chart model={model} year={carYear} />}
+      {left.model && (
+        <Chart
+          left={{ model: left.model, year: left.year }}
+          right={
+            right.model ? { model: right.model, year: right.year } : undefined
+          }
+        />
+      )}
     </div>
   );
 }
