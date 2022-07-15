@@ -47,7 +47,7 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
   }, [selectedModel]);
 
   return (
-    <div>
+    <div className="selector-container">
       <SelectSearch
         options={brandOptions}
         placeholder="Valitse merkki"
@@ -77,6 +77,7 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
         value={selectedYear}
       />
       <button
+        className="selector-button"
         onClick={() =>
           onChange({
             brand: selectedBrand,

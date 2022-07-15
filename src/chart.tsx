@@ -15,15 +15,32 @@ const tickSize = 5000;
 const maxKms = 400000;
 
 const createCarData = (dataset: InspectionStats[]) =>
-  Object.values(dataset)
-    .map((d) => ({
-      km: d.avgKm - (d.avgKm % tickSize),
-      perc: d.count > 0 ? ((d.failCount ?? 0) / d.count) * 100 : undefined,
-    }))
-    .reduce(
-      (acc, cur) => Object.assign(acc, { [cur.km]: cur }),
-      {} as Record<number, { km: number; perc: number }>
-    );
+  Object.fromEntries(
+    Object.entries(
+      Object.values(dataset)
+        .map((d) => ({
+          km: d.avgKm - (d.avgKm % tickSize),
+          perc: d.count > 0 ? ((d.failCount ?? 0) / d.count) * 100 : undefined,
+        }))
+        .reduce((acc, cur) => {
+          if (cur.km in acc) {
+            acc[cur.km].perc.push(cur.perc);
+            return acc;
+          }
+          return Object.assign(acc, { [cur.km]: { ...cur, perc: [cur.perc] } });
+        }, {} as Record<number, { km: number; perc: (number | undefined)[] }>)
+    ).map(([km, value]) => [
+      km,
+      {
+        ...value,
+        perc:
+          value.perc
+            .filter((p) => p !== undefined)
+            .reduce((total: number, cur) => (cur ? total + cur : total), 0) /
+          (value.perc.filter((p) => p !== undefined).length || 1),
+      },
+    ])
+  );
 
 const round = (
   num: number | undefined,
@@ -66,7 +83,7 @@ export const Chart = ({
   const leftData = getData(left.model, left.year);
 
   const rightData = right ? getData(right?.model, right?.year) : [];
-  const baseline = getBaseline(undefined);
+  const baseline = getBaseline();
 
   const leftCarData = createCarData(leftData);
   const rightCarData = createCarData(rightData);
@@ -94,7 +111,7 @@ export const Chart = ({
   );
 
   return (
-    <>
+    <div className="chart-container">
       <h1>
         {getTitle(left)} {right && `vs. ${getTitle(right)}`}
       </h1>
@@ -144,6 +161,6 @@ export const Chart = ({
         )}
         <Legend align="right" layout="vertical" verticalAlign="middle" />
       </ComposedChart>
-    </>
+    </div>
   );
 };

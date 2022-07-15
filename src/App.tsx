@@ -26,19 +26,21 @@ function App() {
 
   return (
     <div className="App">
-      <Selector
-        brand={left.brand}
-        model={left.model}
-        year={left.year}
-        onChange={(val) => setLeft(val)}
-      />
-      <h2>---</h2>
-      <Selector
-        brand={right.brand}
-        model={right.model}
-        year={right.year}
-        onChange={(val) => setRight(val)}
-      />
+      <div className="selectors">
+        <Selector
+          brand={left.brand}
+          model={left.model}
+          year={left.year}
+          onChange={(val) => setLeft(val)}
+        />
+        <h1>vs.</h1>
+        <Selector
+          brand={right.brand}
+          model={right.model}
+          year={right.year}
+          onChange={(val) => setRight(val)}
+        />
+      </div>
       {left.model && (
         <Chart
           left={{ model: left.model, year: left.year }}

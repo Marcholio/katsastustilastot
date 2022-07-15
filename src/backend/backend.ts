@@ -1,12 +1,24 @@
 import processedData from "../data/processed.json";
-import { median, sort } from "ramda";
+import baseline from "../data/baseline.json";
 import { brands } from "./brands";
+import avgDiffs from "../data/avgDiffs.json";
 
 // model -> car year -> inspection year -> stats
 const fullData = processedData as any as Record<
   string,
   Record<string, Record<string, InspectionStats>>
 >;
+
+const baselineData = baseline as any as Record<
+  string,
+  {
+    med: number | undefined;
+    p75: number | undefined;
+    p25: number | undefined;
+  }
+>;
+
+const diffData = avgDiffs as any as Record<string, number>;
 
 export type InspectionStats = {
   count: number;
@@ -49,55 +61,25 @@ export const getData = (
   return Object.values(fullData[model]).flatMap((val) => Object.values(val));
 };
 
-const percentile = (data: number[], percentile: number): number => {
-  const idx = Math.round(percentile * data.length);
-  const sorted = sort((a, b) => a - b, data);
-  return sorted[idx];
-};
+export const getBaseline = () => baselineData;
 
-export const getBaseline = (model: string | undefined) => {
-  const dataset =
-    model !== undefined ? [fullData[model]] : Object.values(fullData);
+export const getTopList = () =>
+  Object.entries(diffData).sort((a, b) => b[1] - a[1]);
 
-  const flatStats = dataset.flatMap((d) =>
-    Object.values(d).flatMap((s) => Object.values(s))
-  );
+export const getTopListByBrand = () => {
+  return Object.entries(
+    brands.reduce((acc, b) => {
+      const models = Object.keys(diffData).filter((model) =>
+        model.startsWith(b)
+      );
+      const sum = models.reduce(
+        (total, model: any) => diffData[model] + total,
+        0
+      );
 
-  const percentagesByKm = flatStats.reduce((acc, cur) => {
-    // KEEP IN SYNC WITH Chart.ts
-    const key = cur.avgKm - (cur.avgKm % 5000);
-    if (!(key in acc)) {
-      acc[key] = [];
-    }
-
-    if (cur.count > 0) {
-      const perc = ((cur.failCount ?? 0) / cur.count) * 100;
-
-      acc[key].push(perc);
-    }
-    return acc;
-  }, {} as Record<string, number[]>);
-
-  const baseLineData = Object.entries(percentagesByKm).reduce(
-    (acc, [km, percentages]) =>
-      Object.assign(acc, {
-        [km]: {
-          med: percentages.length > 0 ? median(percentages) : undefined,
-          p75:
-            percentages.length > 0 ? percentile(percentages, 0.75) : undefined,
-          p25:
-            percentages.length > 0 ? percentile(percentages, 0.25) : undefined,
-        },
-      }),
-    {} as Record<
-      string,
-      {
-        med: number | undefined;
-        p75: number | undefined;
-        p25: number | undefined;
-      }
-    >
-  );
-
-  return baseLineData;
+      return Object.assign(acc, {
+        [b]: sum / models.length,
+      });
+    }, {})
+  ).sort((a: any, b: any) => b[1] - a[1]);
 };
