@@ -66,12 +66,13 @@ export const getBaseline = () => baselineData;
 export const getTopList = () =>
   Object.entries(diffData).sort((a, b) => b[1] - a[1]);
 
-export const getTopListByBrand = () => {
+export const getTopListByBrand = (): [string, number][] => {
   return Object.entries(
     brands.reduce((acc, b) => {
       const models = Object.keys(diffData).filter((model) =>
         model.startsWith(b)
       );
+
       const sum = models.reduce(
         (total, model: any) => diffData[model] + total,
         0
@@ -80,6 +81,6 @@ export const getTopListByBrand = () => {
       return Object.assign(acc, {
         [b]: sum / models.length,
       });
-    }, {})
-  ).sort((a: any, b: any) => b[1] - a[1]);
+    }, {} as Record<string, number>)
+  ).sort((a, b) => b[1] - a[1]);
 };

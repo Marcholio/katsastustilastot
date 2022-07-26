@@ -1,54 +1,29 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 
 import "react-select-search/style.css";
 import "./App.css";
-import { Chart } from "./chart";
-import { Selector } from "./Selector";
+import Comparison from "./Comparison";
+import Home from "./Home";
+import Table from "./Table";
 
-type SelectedCar = {
-  brand?: string;
-  model?: string;
-  year?: string;
-};
+const basePath = "/katsastustilastot";
 
 function App() {
-  const [right, setRight] = useState<SelectedCar>({
-    brand: undefined,
-    model: undefined,
-    year: undefined,
-  });
-
-  const [left, setLeft] = useState<SelectedCar>({
-    brand: undefined,
-    model: undefined,
-    year: undefined,
-  });
-
   return (
     <div className="App">
-      <div className="selectors">
-        <Selector
-          brand={left.brand}
-          model={left.model}
-          year={left.year}
-          onChange={(val) => setLeft(val)}
-        />
-        <h1>vs.</h1>
-        <Selector
-          brand={right.brand}
-          model={right.model}
-          year={right.year}
-          onChange={(val) => setRight(val)}
-        />
-      </div>
-      {left.model && (
-        <Chart
-          left={{ model: left.model, year: left.year }}
-          right={
-            right.model ? { model: right.model, year: right.year } : undefined
-          }
-        />
-      )}
+      <BrowserRouter>
+        <nav>
+          <Link to={`${basePath}/`}>Etusivu</Link>
+          <Link to={`${basePath}/vertailu`}>Vertailu</Link>
+          <Link to={`${basePath}/tilastot`}>Tilastot</Link>
+        </nav>
+        <Routes>
+          <Route path={`${basePath}/`} element={<Home />} />
+          <Route path={`${basePath}/vertailu`} element={<Comparison />} />
+          <Route path={`${basePath}/tilastot`} element={<Table />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

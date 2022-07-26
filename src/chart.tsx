@@ -118,8 +118,9 @@ export const Chart = ({
       <ComposedChart
         width={window.innerWidth * 0.8}
         height={window.innerHeight * 0.6}
-        margin={{ top: 20, right: 20, bottom: 100, left: 200 }}
+        margin={{ bottom: 100, left: 200 }}
         data={chartData}
+        style={{ marginLeft: "8%" }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="km" name="Kilometrit" unit="tkm">
