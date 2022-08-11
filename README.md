@@ -1,46 +1,28 @@
-# Getting Started with Create React App
+# Katsastustilastot
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://marcholio.github.io/katsastustilastot
 
-## Available Scripts
+Cars are source for an endless debate about reliability of different brands and models.
+One says that Opel is always having issue, someone else thinks that's actually BMW.
 
-In the project directory, you can run:
+But what does the data have to say about the matter? Which car is the best if you are looking for
+a reliability over hundreds of thousands of kilometers? This service helps you
+compare different car brands and models over time based on [Trafi's inspection statistics](https://trafi2.stat.fi/PXWeb/pxweb/fi/TraFi/TraFi__Katsastuksen_vikatilastot/?tablelist=true).
+It might not end the discussions, but at least it gives some hard facts to discuss about.
 
-### `npm start`
+## Data
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The data includes Trafi's inspection statistics for 2017 - 2021, limited to cars that are less
+than 15 years old at the time of inspection. The source data includes car's model, inspection year,
+average kilometers, number of cars inspected and number of failed cars that did not pass the inspection.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The data has been analyzed and visualized for easy comparison between different cars models.
 
-### `npm test`
+For example a comparison of Opel Astra and Skoda Octavia over different manufacturing years and inspection years
+looks like this:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Comparison](./comparison.png)
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+The average of all cars in the data is plotted with a grey line, together with 25th and 75th percentiles,
+which gives and outline on how different cars compare to other cars on average. For example in the image above
+Opel Astra is better than average until about 140k km, but after that it starts to have issues.
