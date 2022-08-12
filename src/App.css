@@ -26,8 +26,39 @@ nav a:hover {
   margin-left: 20%;
 }
 
+.home {
+  max-width: 40vw;
+  margin-left: 30vw;
+}
+
+.home a {
+  cursor: pointer;
+}
+
 .comparison {
   text-align: center;
+}
+
+.comparison span,
+.statistics span {
+  cursor: pointer;
+}
+
+.comparison span:hover,
+.statistics span:hover {
+  text-decoration: underline;
+}
+
+.comparison .instructions,
+.statistics .instructions {
+  max-width: 40%;
+  text-align: left;
+  margin-left: 30%;
+}
+
+.comparison .instructions p,
+.statistics .instructions p {
+  margin: 2rem 0;
 }
 
 .selector-container {
@@ -69,7 +100,7 @@ nav a:hover {
 }
 
 .table-container table {
-  padding-top: 2rem;
+  padding: 2rem;
   text-align: left;
   margin-left: auto;
   margin-right: auto;
@@ -89,6 +120,49 @@ nav a:hover {
   text-align: right;
 }
 
-.home {
-  text-align: center;
+@media (max-width: 700px) {
+  nav a {
+    margin: 0 1rem;
+    padding: 0;
+  }
+
+  .home {
+    max-width: 100vw;
+    margin-left: 0;
+    padding: 0 2rem;
+  }
+
+  .table-container td,
+  .table-container th {
+    padding: 0.5rem 0.1rem 0.3rem 0.1rem;
+  }
+
+  .table-container table {
+    padding: 0.1rem;
+    text-align: left;
+    min-width: 300px;
+  }
+
+  .comparison .instructions,
+  .statistics .instructions {
+    max-width: 90%;
+    margin-left: 5%;
+  }
+
+  .selectors {
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem 0;
+    margin: 0;
+    text-align: center;
+  }
+
+  .selector-container {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }

@@ -14,6 +14,8 @@ import {
 const tickSize = 5000;
 const maxKms = 400000;
 
+const isMobile = window.innerWidth < 1200;
+
 const createCarData = (dataset: InspectionStats[]) =>
   Object.fromEntries(
     Object.entries(
@@ -116,9 +118,9 @@ export const Chart = ({
         {getTitle(left)} {right && `vs. ${getTitle(right)}`}
       </h1>
       <ComposedChart
-        width={window.innerWidth * 0.8}
-        height={window.innerHeight * 0.6}
-        margin={{ bottom: 100, left: 200 }}
+        width={window.innerWidth * (isMobile ? 0.9 : 0.8)}
+        height={window.innerHeight * (isMobile ? 0.3 : 0.6)}
+        margin={{ bottom: isMobile ? 0 : 100, left: isMobile ? 0 : 200 }}
         data={chartData}
         style={{ marginLeft: "8%" }}
       >

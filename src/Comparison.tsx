@@ -23,9 +23,33 @@ function Comparison() {
     year: undefined,
   });
 
+  const [showInstructions, setShowInstructions] = useState(false);
+
   return (
     <div className="comparison">
       <h1>Vertailu</h1>
+      <span onClick={() => setShowInstructions(!showInstructions)}>
+        {showInstructions ? "Piilota ohjeet" : "Näytä ohjeet"}
+      </span>
+      {showInstructions && (
+        <div className="instructions">
+          <p>
+            Valitse vertaltavat automerkit. Voit myös tarkentaa valitsemalla
+            tietyn mallin ja tietyn käyttöönottovuoden.
+          </p>
+          <p>
+            Kuvaaja näyttää keskimääräisen auton hylkäysprosentin kehittymisen
+            ajokilometrien kertyessä (tumma viiva). Lisäksi on kuvattu paras ja
+            huonoin neljännes (tumma katkoviiva).
+          </p>
+          <p>
+            Vertailtavat autot näytetään kuvaajassa pisteinä. Mikäli piste on
+            tumman viivan alapuolella, on valittu auto keskimääräistä autoa
+            parempi ja vastaavasti viivan yläpuolella olevat autot vikaantuvat
+            keskimääräistä useammin.
+          </p>
+        </div>
+      )}
       <div className="selectors">
         <Selector
           brand={left.brand}
