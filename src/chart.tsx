@@ -62,11 +62,11 @@ const getTitle = (
   const { model, year } = props;
 
   if (model && year && year !== "0") {
-    return `${model} (${year})`;
+    return isMobile ? `${model} (${year})`.slice(0, 10) : `${model} (${year})`;
   }
 
   if (model) {
-    return `${model}`;
+    return isMobile ? `${model.slice(0, 10)}` : `${model}`;
   }
 
   return "";
