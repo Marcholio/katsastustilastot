@@ -3,7 +3,7 @@
 https://marcholio.github.io/katsastustilastot
 
 Cars are source for an endless debate about reliability of different brands and models.
-One says that Opel is always having issue, someone else thinks that's actually BMW.
+One says that Opel is always having issues, someone else thinks that's actually BMW.
 
 But what does the data have to say about the matter? Which car is the best if you are looking for
 a reliability over hundreds of thousands of kilometers? This service helps you
