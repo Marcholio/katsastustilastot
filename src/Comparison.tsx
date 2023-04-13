@@ -47,9 +47,9 @@ function Comparison() {
         <h1>vs.</h1>
         <Selector brand={right.brand} model={right.model} year={right.year} onChange={(val) => setRight(val)} />
       </div>
-      {left.model && (
+      {(left.model || right.model) && (
         <Chart
-          left={{ model: left.model, year: left.year }}
+          left={left.model ? { model: left.model, year: left.year } : undefined}
           right={right.model ? { model: right.model, year: right.year } : undefined}
         />
       )}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
+import { Route, Routes, Link, HashRouter } from 'react-router-dom'
 
 import 'react-select-search/style.css'
 import './App.css'
@@ -12,7 +12,7 @@ const basePath = '/katsastustilastot'
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <nav>
           <Link to={`${basePath}/`}>Etusivu</Link>
           <Link to={`${basePath}/vertailu`}>Vertailu</Link>
@@ -23,7 +23,7 @@ function App() {
           <Route path={`${basePath}/vertailu`} element={<Comparison />} />
           <Route path={`${basePath}/tilastot`} element={<Table />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   )
 }

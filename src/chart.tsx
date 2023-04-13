@@ -58,15 +58,15 @@ export const Chart = ({
   left,
   right,
 }: {
-  left: {
+  left?: {
     model: string
     year: string | undefined
   }
   right?: { model: string; year: string | undefined }
 }) => {
-  const leftData = getData(left.model, left.year)
+  const leftData = left ? getData(left.model, left.year) : []
 
-  const rightData = right ? getData(right?.model, right?.year) : []
+  const rightData = right ? getData(right.model, right.year) : []
   const baseline = getBaseline()
 
   const leftCarData = createCarData(leftData)
@@ -138,7 +138,7 @@ export const Chart = ({
           connectNulls={true}
           strokeDasharray="10 10"
         />
-        <Scatter name={getTitle(left)} fill="blue" dataKey="percLeft" />
+        {left && <Scatter name={getTitle(left)} fill="blue" dataKey="percLeft" />}
         {right && <Scatter name={getTitle(right)} fill="red" dataKey="percRight" />}
         <Legend align="right" layout="vertical" verticalAlign="middle" />
       </ComposedChart>
