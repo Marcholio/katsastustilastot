@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/katsastustilastot/static/css/main.0cf85279.css",
-    "main.js": "/katsastustilastot/static/js/main.2d2bf9ed.js",
+    "main.css": "/katsastustilastot/static/css/main.54ddc288.css",
+    "main.js": "/katsastustilastot/static/js/main.ac62420f.js",
     "static/js/496.40691ed3.chunk.js": "/katsastustilastot/static/js/496.40691ed3.chunk.js",
     "index.html": "/katsastustilastot/index.html",
-    "main.0cf85279.css.map": "/katsastustilastot/static/css/main.0cf85279.css.map",
-    "main.2d2bf9ed.js.map": "/katsastustilastot/static/js/main.2d2bf9ed.js.map",
+    "main.54ddc288.css.map": "/katsastustilastot/static/css/main.54ddc288.css.map",
+    "main.ac62420f.js.map": "/katsastustilastot/static/js/main.ac62420f.js.map",
     "496.40691ed3.chunk.js.map": "/katsastustilastot/static/js/496.40691ed3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0cf85279.css",
-    "static/js/main.2d2bf9ed.js"
+    "static/css/main.54ddc288.css",
+    "static/js/main.ac62420f.js"
   ]
 }
