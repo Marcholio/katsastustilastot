@@ -7,21 +7,19 @@ import Comparison from './Comparison'
 import Home from './Home'
 import Table from './Table'
 
-const basePath = '/katsastustilastot'
-
 function App() {
   return (
     <div className="App">
       <HashRouter>
         <nav>
-          <Link to={`${basePath}/`}>Etusivu</Link>
-          <Link to={`${basePath}/vertailu`}>Vertailu</Link>
-          <Link to={`${basePath}/tilastot`}>Tilastot</Link>
+          <Link to={`/`}>Etusivu</Link>
+          <Link to={`/vertailu`}>Vertailu</Link>
+          <Link to={`/tilastot`}>Tilastot</Link>
         </nav>
         <Routes>
-          <Route path={`${basePath}/`} element={<Home />} />
-          <Route path={`${basePath}/vertailu`} element={<Comparison />} />
-          <Route path={`${basePath}/tilastot`} element={<Table />} />
+          <Route path={`/`} element={<Home />} />
+          <Route path={`/vertailu`} element={<Comparison />} />
+          <Route path={`/tilastot`} element={<Table />} />
         </Routes>
       </HashRouter>
     </div>
