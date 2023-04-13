@@ -1,9 +1,10 @@
 import { getBaseline, getData } from './backend/backend'
 import { ComposedChart, CartesianGrid, XAxis, YAxis, Legend, Scatter, Tooltip, Line, Label } from 'recharts'
+import ReactSlider from 'react-slider'
 import { InspectionStats } from './types'
+import { useState } from 'react'
 
 const tickSize = 5000
-const maxKms = 400000
 
 const isMobile = window.innerWidth < 1200
 
@@ -72,8 +73,11 @@ export const Chart = ({
   const leftCarData = createCarData(leftData)
   const rightCarData = createCarData(rightData)
 
-  const chartData = [...new Array(Math.floor(maxKms / tickSize))].map((_a, i) => {
-    const baselineData = baseline[i * tickSize]
+  const [maxKms, setMaxKms] = useState<number>(isMobile ? 300_000 : 400_000)
+  const [minKms, setMinKms] = useState<number>(0)
+
+  const chartData = [...new Array(Math.floor((maxKms - minKms) / tickSize))].map((_a, i) => {
+    const baselineData = baseline[i * tickSize + minKms]
     if (!baselineData) {
       return {
         name: 'data',
@@ -94,13 +98,36 @@ export const Chart = ({
 
   return (
     <div className="chart-container">
+      <h3>Rajaa näkymää</h3>
+      <div className="slider-container">
+        <span>min</span>
+        <ReactSlider
+          className="horizontal-slider"
+          thumbClassName="thumb"
+          trackClassName="track"
+          renderThumb={(props, state) => <div {...props}>{state.valueNow} tkm</div>}
+          onChange={(v) => {
+            setMinKms(v[0] * 1000)
+            setMaxKms(v[1] * 1000)
+          }}
+          max={400}
+          min={0}
+          defaultValue={[minKms / 1000, maxKms / 1000]}
+          value={[minKms / 1000, maxKms / 1000]}
+          minDistance={tickSize / 1000}
+          step={tickSize / 1000}
+        />
+        <span>max</span>
+      </div>
       <h1>
-        {getTitle(left)} {right && `vs. ${getTitle(right)}`}
+        {getTitle(left)}
+        {left && right && ` vs. `}
+        {getTitle(right)}
       </h1>
       <ComposedChart
         width={window.innerWidth * (isMobile ? 0.9 : 0.8)}
-        height={window.innerHeight * (isMobile ? 0.3 : 0.6)}
-        margin={{ bottom: isMobile ? 0 : 100, left: isMobile ? 0 : 200 }}
+        height={window.innerHeight * (isMobile ? 0.9 : 0.6)}
+        margin={{ bottom: isMobile ? 25 : 100, left: isMobile ? 40 : 200 }}
         data={chartData}
         style={{ marginLeft: '8%' }}
       >
@@ -109,7 +136,7 @@ export const Chart = ({
           <Label position="bottom">Kilometrit</Label>
         </XAxis>
         <YAxis unit="%" name="Hylkäysprosentti">
-          <Label position="left">Hylkäysprosentti</Label>
+          <Label position="left">{isMobile ? 'Hy%' : 'Hylkäysprosentti'}</Label>
         </YAxis>
         <Tooltip />
         <Line
