@@ -77,6 +77,21 @@ nav a:hover {
   cursor: pointer;
 }
 
+.selector-container .select-search-container {
+  --select-search-background: #fff;
+  --select-search-border: #dce0e8;
+  --select-search-selected: #1e66f5;
+  --select-search-text: #000;
+  --select-search-subtle-text: #6c6f85;
+  --select-search-inverted-text: var(--select-search-background);
+  --select-search-highlight: #eff1f5;
+  --select-search-font: 'Inter', sans-serif;
+}
+
+.selector-container input {
+  cursor: pointer;
+}
+
 .selector-button:hover {
   background-color: darkgrey;
 }

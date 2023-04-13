@@ -1,13 +1,13 @@
-import React from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import React from 'react'
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom'
 
-import "react-select-search/style.css";
-import "./App.css";
-import Comparison from "./Comparison";
-import Home from "./Home";
-import Table from "./Table";
+import 'react-select-search/style.css'
+import './App.css'
+import Comparison from './Comparison'
+import Home from './Home'
+import Table from './Table'
 
-const basePath = "/katsastustilastot";
+const basePath = '/katsastustilastot'
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

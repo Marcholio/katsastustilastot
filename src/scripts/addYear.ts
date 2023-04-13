@@ -1,16 +1,25 @@
-import baseData from '../data/main.json' assert { type: 'json' }
+import yearData from '../data/2022.json' assert { type: 'json' }
+import prevData from '../data/processed.json' assert { type: 'json' }
+
 import fs from 'fs'
-import { median, sort } from 'ramda'
+import { median, sort, mergeDeepLeft, uniq } from 'ramda'
 import { InspectionStats } from '../types.js'
 import { processRawJsonDump } from './processData.js'
 
 const tickSize = 5000
 const maxKms = 400000
 
-const main = baseData as { data: any }
+const main = yearData as { data: any }
 const processedData = processRawJsonDump(main.data)
+const mergedData = mergeDeepLeft(prevData, processedData)
 
-fs.writeFileSync('./src/data/processed.json', JSON.stringify(processedData), {})
+fs.writeFileSync('./src/data/processed_2022.json', JSON.stringify(mergedData), {})
+
+const printBrands = () => {
+  console.log(uniq(Object.keys(mergedData).map((model) => model.split(' ').slice(0, -1).join(' '))))
+}
+
+//printBrands()
 
 const percentile = (data: number[], percentile: number): number => {
   const idx = Math.round(percentile * data.length)
@@ -18,7 +27,7 @@ const percentile = (data: number[], percentile: number): number => {
   return sorted[idx]
 }
 
-const flatStats = Object.values(processedData).flatMap((d: any) =>
+const flatStats = Object.values(mergedData).flatMap((d: any) =>
   Object.values(d).flatMap((s: any) => Object.values(s)),
 ) as InspectionStats[]
 
@@ -56,10 +65,10 @@ const baseLineData = Object.entries(percentagesByKm).reduce(
   >,
 )
 
-fs.writeFileSync('./src/data/baseline.json', JSON.stringify(baseLineData), {})
+fs.writeFileSync('./src/data/baseline_2022.json', JSON.stringify(baseLineData), {})
 
-const averageDiffsByModel = Object.keys(processedData).reduce((acc, model) => {
-  const allStats: InspectionStats[] = Object.values(processedData[model]).flatMap((d: any) => Object.values(d))
+const averageDiffsByModel = Object.keys(mergedData).reduce((acc, model) => {
+  const allStats: InspectionStats[] = Object.values(mergedData[model]).flatMap((d: any) => Object.values(d))
 
   const diffs = allStats
     .filter((stat) => stat.avgKm <= maxKms)
@@ -74,4 +83,4 @@ const averageDiffsByModel = Object.keys(processedData).reduce((acc, model) => {
   return Object.assign(acc, { [model]: avgDiff })
 }, {} as Record<string, number>)
 
-fs.writeFileSync('./src/data/avgDiffs.json', JSON.stringify(averageDiffsByModel), {})
+fs.writeFileSync('./src/data/avgDiffs_2022.json', JSON.stringify(averageDiffsByModel), {})
