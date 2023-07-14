@@ -87,7 +87,7 @@ export const Chart = ({
 
     return {
       name: 'data',
-      km: `${(i * tickSize) / 1000}`,
+      km: `${(i * tickSize + minKms) / 1000}`,
       baseline: round(baselineData.med, 1),
       baseline75: round(baselineData.p75, 1),
       baseline25: round(baselineData.p25, 1),
