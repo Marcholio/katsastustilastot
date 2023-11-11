@@ -1,5 +1,15 @@
 import { getBaseline, getData } from './backend/backend'
-import { ComposedChart, CartesianGrid, XAxis, YAxis, Legend, Scatter, Tooltip, Line, Label } from 'recharts'
+import {
+  ComposedChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Legend,
+  Scatter,
+  Tooltip,
+  Line,
+  Label,
+} from 'recharts'
 import ReactSlider from 'react-slider'
 import { InspectionStats } from './types'
 import { useState } from 'react'
@@ -22,22 +32,31 @@ const createCarData = (dataset: InspectionStats[]) =>
             return acc
           }
           return Object.assign(acc, { [cur.km]: { ...cur, perc: [cur.perc] } })
-        }, {} as Record<number, { km: number; perc: (number | undefined)[] }>),
+        }, {} as Record<number, { km: number; perc: (number | undefined)[] }>)
     ).map(([km, value]) => [
       km,
       {
         ...value,
         perc:
-          value.perc.filter((p) => p !== undefined).reduce((total: number, cur) => (cur ? total + cur : total), 0) /
+          value.perc
+            .filter((p) => p !== undefined)
+            .reduce((total: number, cur) => (cur ? total + cur : total), 0) /
           (value.perc.filter((p) => p !== undefined).length || 1),
       },
-    ]),
+    ])
   )
 
-const round = (num: number | undefined, decimalPlaces: number): number | undefined =>
-  num !== undefined ? Math.round(num * 10 * decimalPlaces) / (10 * decimalPlaces) : undefined
+const round = (
+  num: number | undefined,
+  decimalPlaces: number
+): number | undefined =>
+  num !== undefined
+    ? Math.round(num * 10 * decimalPlaces) / (10 * decimalPlaces)
+    : undefined
 
-const getTitle = (props: { model: string; year: string | undefined } | undefined): string => {
+const getTitle = (
+  props: { model: string; year: string | undefined } | undefined
+): string => {
   if (!props) {
     return ''
   }
@@ -76,7 +95,9 @@ export const Chart = ({
   const [maxKms, setMaxKms] = useState<number>(isMobile ? 300_000 : 400_000)
   const [minKms, setMinKms] = useState<number>(0)
 
-  const chartData = [...new Array(Math.floor((maxKms - minKms) / tickSize))].map((_a, i) => {
+  const chartData = [
+    ...new Array(Math.floor((maxKms - minKms) / tickSize)),
+  ].map((_a, i) => {
     const baselineData = baseline[i * tickSize + minKms]
     if (!baselineData) {
       return {
@@ -105,7 +126,9 @@ export const Chart = ({
           className="horizontal-slider"
           thumbClassName="thumb"
           trackClassName="track"
-          renderThumb={(props, state) => <div {...props}>{state.valueNow} tkm</div>}
+          renderThumb={(props, state) => (
+            <div {...props}>{state.valueNow} tkm</div>
+          )}
           onChange={(v) => {
             setMinKms(v[0] * 1000)
             setMaxKms(v[1] * 1000)
@@ -165,8 +188,12 @@ export const Chart = ({
           connectNulls={true}
           strokeDasharray="10 10"
         />
-        {left && <Scatter name={getTitle(left)} fill="blue" dataKey="percLeft" />}
-        {right && <Scatter name={getTitle(right)} fill="red" dataKey="percRight" />}
+        {left && (
+          <Scatter name={getTitle(left)} fill="blue" dataKey="percLeft" />
+        )}
+        {right && (
+          <Scatter name={getTitle(right)} fill="red" dataKey="percRight" />
+        )}
         <Legend align="right" layout="vertical" verticalAlign="middle" />
       </ComposedChart>
     </div>
