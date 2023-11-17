@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { getTopList, getTopListByBrand } from './backend/backend'
 
 const Table = () => {
+  document.title = 'Katsastustilastot | Luotettavimmat autot'
+
   const topList = getTopList()
   const topListByBrands = getTopListByBrand()
 
@@ -19,19 +21,28 @@ const Table = () => {
       </div>
       {showInstructions && (
         <div className="instructions">
-          <p>Tilastossa voit vertailla kaikkia aineiston merkkejä ja malleja.</p>
           <p>
-            Taulukossa kukin merkki ja malli on pisteytetty sen mukaan, kuinka paljon keskimääräistä autoa parempi se
-            keskimäärin on. Esimerkiksi, jos keskimääräisen 100tkm ajetun auton hylkäysprosentti on 9.8%, ja
-            vertailtavan auton vastaava hylkäysprosentti on 5.2% saa se 4.6 pistettä.
+            Tilastossa voit vertailla kaikkia aineiston merkkejä ja malleja.
           </p>
           <p>
-            Kaikista pisteistä lasketaan keskiarvo, jolloin esimerkiksi -10 kokonaispistettä tarkoittaa, että kyseisen
-            auton hylkäysprosentti on keskimäärin 10 prosenttiyksikköä huonompi, kuin keskimääräisellä autolla.
+            Taulukossa kukin merkki ja malli on pisteytetty sen mukaan, kuinka
+            paljon keskimääräistä autoa parempi se keskimäärin on. Esimerkiksi,
+            jos keskimääräisen 100tkm ajetun auton hylkäysprosentti on 9.8%, ja
+            vertailtavan auton vastaava hylkäysprosentti on 5.2% saa se 4.6
+            pistettä.
+          </p>
+          <p>
+            Kaikista pisteistä lasketaan keskiarvo, jolloin esimerkiksi -10
+            kokonaispistettä tarkoittaa, että kyseisen auton hylkäysprosentti on
+            keskimäärin 10 prosenttiyksikköä huonompi, kuin keskimääräisellä
+            autolla.
           </p>
         </div>
       )}
-      <button className={'table-button'} onClick={() => setShowBrands(!showBrands)}>
+      <button
+        className={'table-button'}
+        onClick={() => setShowBrands(!showBrands)}
+      >
         Näytä {showBrands ? 'mallit' : 'merkit'}
       </button>
       <div className="table-container">

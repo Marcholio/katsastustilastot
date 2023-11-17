@@ -18,12 +18,37 @@ nav a:hover {
   text-decoration: underline;
 }
 
+.cta-container {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.cta-button {
+  background: green;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  border: 2px solid green;
+}
+
+.cta-button:hover {
+  box-shadow: 1px 1px 4px green;
+}
+
 .selectors {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   width: 60%;
   margin-left: 20%;
+}
+
+.selectors p {
+  margin-top: 5rem;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 .home {
@@ -210,6 +235,11 @@ nav a:hover {
     padding: 1rem 0;
     margin: 0;
     text-align: center;
+  }
+
+  .selectors p {
+    margin-top: 0;
+    font-size: 16px;
   }
 
   .selector-container {

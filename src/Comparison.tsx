@@ -6,6 +6,8 @@ import { Selector } from './Selector'
 import { SelectedCar } from './types'
 
 function Comparison() {
+  document.title = 'Katsastustilastot | Vertaile katsastustilastoja'
+
   const [right, setRight] = useState<SelectedCar>({
     brand: undefined,
     model: undefined,
@@ -29,28 +31,43 @@ function Comparison() {
       {showInstructions && (
         <div className="instructions">
           <p>
-            Valitse vertaltavat automerkit. Voit myös tarkentaa valitsemalla tietyn mallin ja tietyn käyttöönottovuoden.
+            Valitse vertaltavat automerkit. Voit myös tarkentaa valitsemalla
+            tietyn mallin ja tietyn käyttöönottovuoden.
           </p>
           <p>
-            Kuvaaja näyttää keskimääräisen auton hylkäysprosentin kehittymisen ajokilometrien kertyessä (tumma viiva).
-            Lisäksi on kuvattu paras ja huonoin neljännes (tumma katkoviiva).
+            Kuvaaja näyttää keskimääräisen auton hylkäysprosentin kehittymisen
+            ajokilometrien kertyessä (tumma viiva). Lisäksi on kuvattu paras ja
+            huonoin neljännes (tumma katkoviiva).
           </p>
           <p>
-            Vertailtavat autot näytetään kuvaajassa pisteinä. Mikäli piste on tumman viivan alapuolella, on valittu auto
-            keskimääräistä autoa parempi ja vastaavasti viivan yläpuolella olevat autot vikaantuvat keskimääräistä
-            useammin.
+            Vertailtavat autot näytetään kuvaajassa pisteinä. Mikäli piste on
+            tumman viivan alapuolella, on valittu auto keskimääräistä autoa
+            parempi ja vastaavasti viivan yläpuolella olevat autot vikaantuvat
+            keskimääräistä useammin.
           </p>
         </div>
       )}
       <div className="selectors">
-        <Selector brand={left.brand} model={left.model} year={left.year} onChange={(val) => setLeft(val)} />
-        <h1>vs.</h1>
-        <Selector brand={right.brand} model={right.model} year={right.year} onChange={(val) => setRight(val)} />
+        <Selector
+          brand={left.brand}
+          model={left.model}
+          year={left.year}
+          onChange={(val) => setLeft(val)}
+        />
+        <p>vs.</p>
+        <Selector
+          brand={right.brand}
+          model={right.model}
+          year={right.year}
+          onChange={(val) => setRight(val)}
+        />
       </div>
       {(left.model || right.model) && (
         <Chart
           left={left.model ? { model: left.model, year: left.year } : undefined}
-          right={right.model ? { model: right.model, year: right.year } : undefined}
+          right={
+            right.model ? { model: right.model, year: right.year } : undefined
+          }
         />
       )}
     </div>
