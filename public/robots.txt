@@ -1,3 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
+Sitemap: https://katsastustilastot.eu/sitemap.xml
+
 User-agent: *
 Disallow:
