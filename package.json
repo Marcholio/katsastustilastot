@@ -11,8 +11,7 @@
     "react-router-dom": "^6.23.1",
     "react-select-search": "^4.1.7",
     "react-slider": "^2.0.6",
-    "recharts": "^2.12.7",
-    "web-vitals": "^3.5.2"
+    "recharts": "^2.12.7"
   },
   "scripts": {
     "start": "react-scripts start",
