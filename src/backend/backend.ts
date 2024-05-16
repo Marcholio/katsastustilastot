@@ -1,7 +1,7 @@
-import processedData from '../data/processed_2022.json'
-import baseline from '../data/baseline_2022.json'
+import processedData from '../data/processed_2023.json'
+import baseline from '../data/baseline_2023.json'
 import { brands } from './brands'
-import avgDiffs from '../data/avgDiffs_2022.json'
+import avgDiffs from '../data/avgDiffs_2023.json'
 import { InspectionStats, ProcessedData } from '../types'
 
 // model -> car year -> inspection year -> stats
@@ -27,14 +27,21 @@ export const getModels = (brand: string): string[] =>
 
 export const getYears = (model: string): string[] =>
   fullData[model]
-    ? Object.keys(fullData[model]).filter((year) => Object.values(fullData[model][year]).some((stat) => stat.count > 0))
+    ? Object.keys(fullData[model]).filter((year) =>
+        Object.values(fullData[model][year]).some((stat) => stat.count > 0)
+      )
     : []
 
-export const getData = (model: string, carYear: string | undefined): InspectionStats[] => {
+export const getData = (
+  model: string,
+  carYear: string | undefined
+): InspectionStats[] => {
   if (!fullData[model]) {
     return Object.keys(fullData)
       .filter((m) => m.startsWith(model))
-      .flatMap((m) => Object.values(fullData[m]).flatMap((val) => Object.values(val)))
+      .flatMap((m) =>
+        Object.values(fullData[m]).flatMap((val) => Object.values(val))
+      )
   }
 
   if (carYear && carYear !== '0') {
@@ -46,18 +53,24 @@ export const getData = (model: string, carYear: string | undefined): InspectionS
 
 export const getBaseline = () => baselineData
 
-export const getTopList = () => Object.entries(diffData).sort((a, b) => b[1] - a[1])
+export const getTopList = () =>
+  Object.entries(diffData).sort((a, b) => b[1] - a[1])
 
 export const getTopListByBrand = (): [string, number][] => {
   return Object.entries(
     brands.reduce((acc, b) => {
-      const models = Object.keys(diffData).filter((model) => model.startsWith(b))
+      const models = Object.keys(diffData).filter((model) =>
+        model.startsWith(b)
+      )
 
-      const sum = models.reduce((total, model: any) => diffData[model] + total, 0)
+      const sum = models.reduce(
+        (total, model: any) => diffData[model] + total,
+        0
+      )
 
       return Object.assign(acc, {
         [b]: sum / models.length,
       })
-    }, {} as Record<string, number>),
+    }, {} as Record<string, number>)
   ).sort((a, b) => b[1] - a[1])
 }

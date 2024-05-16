@@ -112,8 +112,8 @@ export const Chart = ({
       baseline: round(baselineData.med, 1),
       baseline75: round(baselineData.p75, 1),
       baseline25: round(baselineData.p25, 1),
-      percLeft: round(leftCarData[i * tickSize]?.perc, 1),
-      percRight: round(rightCarData[i * tickSize]?.perc, 1),
+      percLeft: round(leftCarData[i * tickSize + minKms]?.perc, 1),
+      percRight: round(rightCarData[i * tickSize + minKms]?.perc, 1),
     }
   })
 

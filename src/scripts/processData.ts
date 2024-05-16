@@ -6,15 +6,19 @@
 
 import { InspectionStats } from '../types.js'
 
-export const processRawJsonDump = (data: any): Record<string, Record<string, Record<string, InspectionStats>>> => {
-  const nonSumRows = data.filter((d: any) => !d.key[1].includes('yhteensä') && !d.key[2].includes('yhteensä'))
+export const processRawJsonDump = (
+  data: any
+): Record<string, Record<string, Record<string, InspectionStats>>> => {
+  const nonSumRows = data.filter(
+    (d: any) => !d.key[1].includes('yhteensä') && !d.key[2].includes('yhteensä')
+  )
 
   const processedData = nonSumRows
     //.filter((r: any) => r.key[1].includes("Volkswagen"))
     .filter((r: any) => !isNaN(r.values[0]))
     .map((r: any) => ({
       inspectionYear: r.key[0],
-      model: r.key[1],
+      model: r.key[1].replaceAll('Tesla Motors', 'Tesla'),
       carYear: r.key[2],
       stat: r.key[3],
       value: Number(r.values[0]),
