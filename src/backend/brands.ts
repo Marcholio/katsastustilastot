@@ -10,7 +10,6 @@ export const brands: string[] = [
   'Dodge',
   'Fiat',
   'Ford',
-  'GM Daewoo',
   'Honda',
   'Hyundai',
   'Jaguar',

@@ -18,7 +18,9 @@ export const processRawJsonDump = (
     .filter((r: any) => !isNaN(r.values[0]))
     .map((r: any) => ({
       inspectionYear: r.key[0],
-      model: r.key[1].replaceAll('Tesla Motors', 'Tesla'),
+      model: r.key[1]
+        .replaceAll('Tesla Motors', 'Tesla')
+        .replaceAll('GM Daewoo', 'Daewoo'),
       carYear: r.key[2],
       stat: r.key[3],
       value: Number(r.values[0]),
