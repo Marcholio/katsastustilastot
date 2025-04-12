@@ -9,7 +9,10 @@ type Props = {
   year?: string
 }
 
-const modelOptions = (brand: string | undefined, models: string[]): SelectSearchOption[] =>
+const modelOptions = (
+  brand: string | undefined,
+  models: string[]
+): SelectSearchOption[] =>
   [undefined, ...models.sort()].map((model) => ({
     name: model ?? 'Kaikki mallit',
     value: model ? `${brand} ${model}` : `${brand}`,
@@ -54,9 +57,13 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
         search={true}
         filterOptions={[
           (opts: SelectSearchOption[], query: string) =>
-            opts.filter((o) => o.name.toLowerCase().includes(query.toLowerCase())),
+            opts.filter((o) =>
+              o.name.toLowerCase().includes(query.toLowerCase())
+            ),
         ]}
         onChange={(val) => setSelectedBrand(val.toString())}
+        onBlur={() => {}}
+        onFocus={() => {}}
         value={selectedBrand}
       />
       <SelectSearch
@@ -65,16 +72,22 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
         search
         filterOptions={[
           (opts: SelectSearchOption[], query: string) =>
-            opts.filter((o) => o.name.toLowerCase().includes(query.toLowerCase())),
+            opts.filter((o) =>
+              o.name.toLowerCase().includes(query.toLowerCase())
+            ),
         ]}
         onChange={(val: any) => setSelectedModel(val.toString())}
         value={selectedModel}
+        onBlur={() => {}}
+        onFocus={() => {}}
       />
       <SelectSearch
         options={yearOptions(years)}
         placeholder="Valitse käyttöönottovuosi"
         onChange={(val: any) => setSelectedYear(val.toString())}
         value={selectedYear}
+        onBlur={() => {}}
+        onFocus={() => {}}
       />
       <button
         className="selector-button"
