@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build && cp CNAME build/CNAME",
+    "build": "next build && cp CNAME build/CNAME && touch build/.nojekyll",
     "start": "npx serve ./build",
     "deploy": "yarn build && gh-pages -d build",
     "parse-data": "node --loader ts-node/esm ./src/scripts/parseData.ts",
