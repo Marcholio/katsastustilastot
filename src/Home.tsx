@@ -29,7 +29,7 @@ const Home = () => {
           >
             Trafin julkaisemaan avoimeen dataan
           </a>
-          . Aineisto sisältää vuosina 2017 - 2023 katsastetut, katsastushetkellä
+          . Aineisto sisältää vuosina 2017 - 2024 katsastetut, katsastushetkellä
           alle 15v. vanhat autot. Vertailu ei siis ole täydellinen vanhempien
           autojen osalta, mutta antaa kuitenkin hyvän käsityksen eri mallien
           luotettavuudesta.

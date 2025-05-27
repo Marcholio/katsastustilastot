@@ -1,16 +1,18 @@
 // Adding a new year:
 // 1. Export the data from Trafi (see processData.ts)
-// 2. Save tha data as year.json in the data folder
+// 2. Save tha data as <year>.json in the data folder
 // 3. Change year to the new year in const
-// 4. Change the year to processed_year.json
+// 4. Change the year to previous processed_<year>.json
 // 5. Run the script yarn add-year
 // 6. Print brands and copy to backend/brands.ts
 // 7. Change year to backend/backend.ts
 // 8. Change years to Home.tsx, sitemap.xml and README.md
 // 9. Profit
 
-import yearData from '../data/2023.json' assert { type: 'json' }
-import prevData from '../data/processed_2022.json' assert { type: 'json' }
+// 3.
+import yearData from '../data/2024.json' with { type: 'json' }
+// 4.
+import prevData from '../data/processed_2023.json' with { type: 'json' }
 
 import fs from 'fs'
 import { median, sort, mergeDeepLeft, uniq } from 'ramda'
@@ -20,7 +22,8 @@ import { processRawJsonDump } from './processData.js'
 const tickSize = 5000
 const maxKms = 400000
 
-const YEAR = 2023
+// 3.
+const YEAR = 2024
 
 const main = yearData as { data: any }
 const processedData = processRawJsonDump(main.data)

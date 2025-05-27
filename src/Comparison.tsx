@@ -31,8 +31,8 @@ function Comparison() {
       {showInstructions && (
         <div className="instructions">
           <p>
-            Valitse vertaltavat automerkit. Voit myös tarkentaa valitsemalla
-            tietyn mallin ja tietyn käyttöönottovuoden.
+            Valitse vertailtavat automerkit. Voit myös tarkentaa vertailua
+            valitsemalla tietyn mallin ja tietyn käyttöönottovuoden.
           </p>
           <p>
             Kuvaaja näyttää keskimääräisen auton hylkäysprosentin kehittymisen

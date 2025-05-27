@@ -25,6 +25,7 @@ export const brands: string[] = [
   'Nissan',
   'Opel',
   'Peugeot',
+  'Polestar',
   'Porsche',
   'Renault',
   'Saab',

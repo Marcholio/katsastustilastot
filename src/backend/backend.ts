@@ -1,7 +1,7 @@
-import processedData from '../data/processed_2023.json'
-import baseline from '../data/baseline_2023.json'
+import processedData from '../data/processed_2024.json'
+import baseline from '../data/baseline_2024.json'
 import { brands } from './brands'
-import avgDiffs from '../data/avgDiffs_2023.json'
+import avgDiffs from '../data/avgDiffs_2024.json'
 import { InspectionStats, ProcessedData } from '../types'
 
 // model -> car year -> inspection year -> stats
