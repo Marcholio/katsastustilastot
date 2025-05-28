@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { use, useEffect, useState } from 'react'
 import SelectSearch, { SelectSearchOption } from 'react-select-search'
 import { getBrands, getModels, getYears } from './backend/backend'
 
@@ -54,6 +54,20 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
     }
   }, [selectedModel])
 
+  useEffect(() => {
+    const years = selectedModel ? getYears(selectedModel) : []
+    const validYear =
+      !selectedYear || (selectedYear && years.includes(selectedYear))
+
+    if (validYear) {
+      onChange({
+        brand: selectedBrand,
+        model: selectedModel,
+        year: selectedYear,
+      })
+    }
+  }, [selectedBrand, selectedModel, selectedYear])
+
   return (
     <div className="selector-container">
       <SelectSearch
@@ -94,18 +108,6 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
         onBlur={() => {}}
         onFocus={() => {}}
       />
-      <button
-        className="selector-button"
-        onClick={() =>
-          onChange({
-            brand: selectedBrand,
-            model: selectedModel,
-            year: selectedYear,
-          })
-        }
-      >
-        VALITSE
-      </button>
     </div>
   )
 }
