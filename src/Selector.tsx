@@ -57,7 +57,9 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
   useEffect(() => {
     const years = selectedModel ? getYears(selectedModel) : []
     const validYear =
-      !selectedYear || (selectedYear && years.includes(selectedYear))
+      !selectedYear ||
+      selectedYear === '0' ||
+      (selectedYear && years.includes(selectedYear))
 
     if (validYear) {
       onChange({
