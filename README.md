@@ -12,7 +12,7 @@ It might not end the discussions, but at least it gives some hard facts to discu
 
 ## Data
 
-The data includes Trafi's inspection statistics for 2017 - 2023, limited to cars that are less
+The data includes Trafi's inspection statistics for 2017 - 2024, limited to cars that are less
 than 15 years old at the time of inspection. The source data includes car's model, inspection year,
 average kilometers, number of cars inspected and number of failed cars that did not pass the inspection.
 
