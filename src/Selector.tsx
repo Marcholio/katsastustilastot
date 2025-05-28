@@ -40,12 +40,17 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
   useEffect(() => {
     if (selectedBrand) {
       setModels(getModels(selectedBrand))
+      setSelectedYear(undefined)
     }
   }, [selectedBrand])
 
   useEffect(() => {
     if (selectedModel) {
-      setYears(getYears(selectedModel))
+      const newYears = getYears(selectedModel)
+      if (selectedYear && !newYears.includes(selectedYear)) {
+        setSelectedYear(undefined)
+      }
+      setYears(newYears)
     }
   }, [selectedModel])
 

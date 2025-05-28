@@ -24,25 +24,24 @@ nav a:hover {
 }
 
 .cta-button {
-  background: green;
+  background: linear-gradient(90deg, #28a745 0%, #218838 100%);
   padding: 1rem 2rem;
   border-radius: 8px;
   text-decoration: none;
   color: white;
   font-weight: bold;
-  border: 2px solid green;
 }
 
 .cta-button:hover {
-  box-shadow: 1px 1px 4px green;
+  box-shadow: 1px 1px 4px #28a745;
 }
 
 .selectors {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  width: 60%;
-  margin-left: 20%;
+  margin: 0 auto;
+  max-width: 60%;
 }
 
 .selectors p {
@@ -78,7 +77,7 @@ nav a:hover {
 .statistics .instructions {
   max-width: 40%;
   text-align: left;
-  margin-left: 30%;
+  margin: auto;
 }
 
 .comparison .instructions p,
@@ -198,6 +197,23 @@ nav a:hover {
 
 .align-right {
   text-align: right;
+}
+
+@media (max-width: 1200px) {
+  .selectors {
+    max-width: 80%;
+  }
+
+  .comparison .instructions,
+  .statistics .instructions {
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 920px) {
+  .selectors {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 700px) {
