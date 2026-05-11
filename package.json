@@ -5,11 +5,11 @@
   "type": "module",
   "homepage": "https://katsastustilastot.eu",
   "dependencies": {
-    "next": "^15.3.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router": "^7.5.0",
-    "react-router-dom": "^7.5.0",
+    "next": "^15.5.18",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router": "^7.15.0",
+    "react-router-dom": "^7.15.0",
     "react-select-search": "^4.1.8",
     "react-slider": "^2.0.6",
     "recharts": "^2.15.2"
@@ -19,8 +19,8 @@
     "build": "next build && cp CNAME build/CNAME && touch build/.nojekyll",
     "start": "npx serve ./build",
     "deploy": "yarn build && gh-pages -d build",
-    "parse-data": "node --loader ts-node/esm ./src/scripts/parseData.ts",
-    "add-year": "node --loader ts-node/esm ./src/scripts/addYear.ts"
+    "parse-data": "tsx ./src/scripts/parseData.ts",
+    "add-year": "tsx ./src/scripts/addYear.ts"
   },
   "browserslist": {
     "production": [
@@ -34,23 +34,19 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@4.0.1",
+  "packageManager": "yarn@4.14.1",
   "devDependencies": {
     "@types/eslint": "^9.6.1",
-    "@types/node": "^22.14.1",
-    "@types/ramda": "^0.30.2",
-    "@types/react": "19.1.1",
-    "@types/react-dom": "^19.1.2",
+    "@types/node": "^25.6.2",
+    "@types/ramda": "^0.31.1",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@types/react-slider": "^1.3.6",
-    "@typescript-eslint/eslint-plugin": "^8.29.1",
-    "@typescript-eslint/parser": "^8.29.1",
-    "eslint": "9.24.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.2",
+    "@typescript-eslint/parser": "^8.59.2",
+    "eslint": "9.39.4",
     "gh-pages": "^6.3.0",
-    "ramda": "^0.30.1",
-    "ts-node": "^10.9.2",
-    "typescript": "5.8.3"
-  },
-  "resolutions": {
-    "@types/react": "18.2.37"
+    "ramda": "^0.32.0",
+    "typescript": "5.9.3"
   }
 }
