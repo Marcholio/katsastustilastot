@@ -20,9 +20,13 @@ export const processRawJsonDump = (
   )
 
   const processedData = nonSumRows
-    // .filter((r: any) => r.key[1].includes('Toyota') && r.key[1].includes('IN'))
+    /* .filter(
+      (r: any) =>
+        r.key[1].includes('Tesla') &&
+        r.key[1].toLowerCase().includes('model y'),
+    )*/
     .filter((r: any) => !isNaN(r.values[0]))
-    //.map(log)
+    //  .map(log)
     .map((r: any) => ({
       inspectionYear: r.key[0],
       model: r.key[1]
@@ -63,9 +67,12 @@ export const processRawJsonDump = (
         case 'Hylatyt':
           acc[model][carYear][inspectionYear].failCount = row.value
           return acc
+        case 'Hylkaysprosentti':
+          return acc
       }
 
-      return acc
+      // Ensure you have exported the correct file.
+      throw new Error('Unknown stat ' + row.stat)
     }, {})
 
   return processedData
