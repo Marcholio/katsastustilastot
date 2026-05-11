@@ -6,7 +6,10 @@ export type InspectionStats = {
   failCount: number
 }
 
-export type ProcessedData = Record<string, Record<string, Record<string, InspectionStats>>>
+export type ProcessedData = Record<
+  string,
+  Record<string, Record<string, InspectionStats>>
+>
 
 export type SelectedCar = {
   brand?: string

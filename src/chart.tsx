@@ -26,13 +26,18 @@ const createCarData = (dataset: InspectionStats[]) =>
           km: d.avgKm - (d.avgKm % tickSize),
           perc: d.count > 0 ? ((d.failCount ?? 0) / d.count) * 100 : undefined,
         }))
-        .reduce((acc, cur) => {
-          if (cur.km in acc) {
-            acc[cur.km].perc.push(cur.perc)
-            return acc
-          }
-          return Object.assign(acc, { [cur.km]: { ...cur, perc: [cur.perc] } })
-        }, {} as Record<number, { km: number; perc: (number | undefined)[] }>)
+        .reduce(
+          (acc, cur) => {
+            if (cur.km in acc) {
+              acc[cur.km].perc.push(cur.perc)
+              return acc
+            }
+            return Object.assign(acc, {
+              [cur.km]: { ...cur, perc: [cur.perc] },
+            })
+          },
+          {} as Record<number, { km: number; perc: (number | undefined)[] }>,
+        ),
     ).map(([km, value]) => [
       km,
       {
@@ -43,19 +48,19 @@ const createCarData = (dataset: InspectionStats[]) =>
             .reduce((total: number, cur) => (cur ? total + cur : total), 0) /
           (value.perc.filter((p) => p !== undefined).length || 1),
       },
-    ])
+    ]),
   )
 
 const round = (
   num: number | undefined,
-  decimalPlaces: number
+  decimalPlaces: number,
 ): number | undefined =>
   num !== undefined
     ? Math.round(num * 10 * decimalPlaces) / (10 * decimalPlaces)
     : undefined
 
 const getTitle = (
-  props: { model: string; year: string | undefined } | undefined
+  props: { model: string; year: string | undefined } | undefined,
 ): string => {
   if (!props) {
     return ''

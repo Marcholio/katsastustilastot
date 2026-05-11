@@ -4,7 +4,7 @@
 // 3. Select all other fields
 // Select JSON as export format
 
-import { InspectionStats } from '../types.js'
+import { InspectionStats } from '../types'
 
 export const processRawJsonDump = (
   data: any

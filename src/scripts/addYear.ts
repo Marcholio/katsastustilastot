@@ -16,8 +16,8 @@ import prevData from '../data/processed_2023.json' with { type: 'json' }
 
 import fs from 'fs'
 import { median, sort, mergeDeepLeft, uniq } from 'ramda'
-import { InspectionStats } from '../types.js'
-import { processRawJsonDump } from './processData.js'
+import { InspectionStats } from '../types'
+import { processRawJsonDump } from './processData'
 
 const tickSize = 5000
 const maxKms = 400000

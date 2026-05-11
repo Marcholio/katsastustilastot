@@ -1,8 +1,8 @@
-import baseData from '../data/main.json' assert { type: 'json' }
+import baseData from '../data/main.json' with { type: 'json' }
 import fs from 'fs'
 import { median, sort } from 'ramda'
-import { InspectionStats } from '../types.js'
-import { processRawJsonDump } from './processData.js'
+import { InspectionStats } from '../types'
+import { processRawJsonDump } from './processData'
 
 const tickSize = 5000
 const maxKms = 400000
@@ -22,20 +22,23 @@ const flatStats = Object.values(processedData).flatMap((d: any) =>
   Object.values(d).flatMap((s: any) => Object.values(s)),
 ) as InspectionStats[]
 
-const percentagesByKm = flatStats.reduce((acc: any, cur: any) => {
-  // KEEP IN SYNC WITH Chart.ts
-  const key = cur.avgKm - (cur.avgKm % tickSize)
-  if (!(key in acc)) {
-    acc[key] = []
-  }
+const percentagesByKm = flatStats.reduce(
+  (acc: any, cur: any) => {
+    // KEEP IN SYNC WITH Chart.ts
+    const key = cur.avgKm - (cur.avgKm % tickSize)
+    if (!(key in acc)) {
+      acc[key] = []
+    }
 
-  if (cur.count > 0) {
-    const perc = ((cur.failCount ?? 0) / cur.count) * 100
+    if (cur.count > 0) {
+      const perc = ((cur.failCount ?? 0) / cur.count) * 100
 
-    acc[key].push(perc)
-  }
-  return acc
-}, {} as Record<string, number[]>)
+      acc[key].push(perc)
+    }
+    return acc
+  },
+  {} as Record<string, number[]>,
+)
 
 const baseLineData = Object.entries(percentagesByKm).reduce(
   (acc, [km, percentages]: any) =>
@@ -58,20 +61,29 @@ const baseLineData = Object.entries(percentagesByKm).reduce(
 
 fs.writeFileSync('./src/data/baseline.json', JSON.stringify(baseLineData), {})
 
-const averageDiffsByModel = Object.keys(processedData).reduce((acc, model) => {
-  const allStats: InspectionStats[] = Object.values(processedData[model]).flatMap((d: any) => Object.values(d))
+const averageDiffsByModel = Object.keys(processedData).reduce(
+  (acc, model) => {
+    const allStats: InspectionStats[] = Object.values(
+      processedData[model],
+    ).flatMap((d: any) => Object.values(d))
 
-  const diffs = allStats
-    .filter((stat) => stat.avgKm <= maxKms)
-    .map((stat) => {
-      const kmSlot = stat.avgKm - (stat.avgKm % tickSize)
-      const baseline = baseLineData[kmSlot.toString()]
-      return baseline.med! - (100 * (stat.failCount || 0)) / stat.count
-    })
+    const diffs = allStats
+      .filter((stat) => stat.avgKm <= maxKms)
+      .map((stat) => {
+        const kmSlot = stat.avgKm - (stat.avgKm % tickSize)
+        const baseline = baseLineData[kmSlot.toString()]
+        return baseline.med! - (100 * (stat.failCount || 0)) / stat.count
+      })
 
-  const avgDiff = diffs.reduce((total, cur) => total + cur, 0) / diffs.length
+    const avgDiff = diffs.reduce((total, cur) => total + cur, 0) / diffs.length
 
-  return Object.assign(acc, { [model]: avgDiff })
-}, {} as Record<string, number>)
+    return Object.assign(acc, { [model]: avgDiff })
+  },
+  {} as Record<string, number>,
+)
 
-fs.writeFileSync('./src/data/avgDiffs.json', JSON.stringify(averageDiffsByModel), {})
+fs.writeFileSync(
+  './src/data/avgDiffs.json',
+  JSON.stringify(averageDiffsByModel),
+  {},
+)
