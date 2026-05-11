@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes, Link, HashRouter } from 'react-router-dom'
 
-import 'react-select-search/style.css'
 import './App.css'
 import Comparison from './Comparison'
 import Home from './Home'

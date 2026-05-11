@@ -1,5 +1,5 @@
-import { use, useEffect, useState } from 'react'
-import SelectSearch, { SelectSearchOption } from 'react-select-search'
+import { useEffect, useState } from 'react'
+import { SearchSelect, SearchSelectOption } from './SearchSelect'
 import { getBrands, getModels, getYears } from './backend/backend'
 
 type Props = {
@@ -11,14 +11,14 @@ type Props = {
 
 const modelOptions = (
   brand: string | undefined,
-  models: string[]
-): SelectSearchOption[] =>
-  [undefined, ...models.sort()].map((model) => ({
+  models: string[],
+): SearchSelectOption[] =>
+  [undefined, ...[...models].sort()].map((model) => ({
     name: model ?? 'Kaikki mallit',
     value: model ? `${brand} ${model}` : `${brand}`,
   }))
 
-const yearOptions = (years: string[]): SelectSearchOption[] =>
+const yearOptions = (years: string[]): SearchSelectOption[] =>
   [undefined, ...years].map((year) => ({
     name: year ?? 'Kaikki käyttöönottovuodet',
     value: year ?? '0',
@@ -26,7 +26,7 @@ const yearOptions = (years: string[]): SelectSearchOption[] =>
 
 export const Selector = ({ onChange, brand, model, year }: Props) => {
   const brands = getBrands()
-  const brandOptions = brands.map((b) => ({
+  const brandOptions: SearchSelectOption[] = brands.map((b) => ({
     name: b,
     value: b,
   }))
@@ -72,43 +72,25 @@ export const Selector = ({ onChange, brand, model, year }: Props) => {
 
   return (
     <div className="selector-container">
-      <SelectSearch
+      <SearchSelect
         options={brandOptions}
         placeholder="Valitse merkki"
-        search={true}
-        filterOptions={[
-          (opts: SelectSearchOption[], query: string) =>
-            opts.filter((o) =>
-              o.name.toLowerCase().includes(query.toLowerCase())
-            ),
-        ]}
-        onChange={(val) => setSelectedBrand(val.toString())}
-        onBlur={() => {}}
-        onFocus={() => {}}
+        search
+        onChange={(val) => setSelectedBrand(val)}
         value={selectedBrand}
       />
-      <SelectSearch
+      <SearchSelect
         options={modelOptions(selectedBrand, models)}
         placeholder="Valitse malli"
         search
-        filterOptions={[
-          (opts: SelectSearchOption[], query: string) =>
-            opts.filter((o) =>
-              o.name.toLowerCase().includes(query.toLowerCase())
-            ),
-        ]}
-        onChange={(val: any) => setSelectedModel(val.toString())}
+        onChange={(val) => setSelectedModel(val)}
         value={selectedModel}
-        onBlur={() => {}}
-        onFocus={() => {}}
       />
-      <SelectSearch
+      <SearchSelect
         options={yearOptions(years)}
         placeholder="Valitse käyttöönottovuosi"
-        onChange={(val: any) => setSelectedYear(val.toString())}
+        onChange={(val) => setSelectedYear(val)}
         value={selectedYear}
-        onBlur={() => {}}
-        onFocus={() => {}}
       />
     </div>
   )

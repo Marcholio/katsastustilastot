@@ -10,7 +10,7 @@ import {
   Line,
   Label,
 } from 'recharts'
-import ReactSlider from 'react-slider'
+import { RangeSlider } from './RangeSlider'
 import { InspectionStats } from './types'
 import { useState } from 'react'
 
@@ -122,23 +122,17 @@ export const Chart = ({
       <h3>Rajaa näkymää</h3>
       <div className="slider-container">
         <span>min</span>
-        <ReactSlider
-          className="horizontal-slider"
-          thumbClassName="thumb"
-          trackClassName="track"
-          renderThumb={(props, state) => (
-            <div {...props}>{state.valueNow} tkm</div>
-          )}
+        <RangeSlider
+          min={0}
+          max={400}
+          step={tickSize / 1000}
+          minDistance={tickSize / 1000}
+          value={[minKms / 1000, maxKms / 1000]}
           onChange={(v) => {
             setMinKms(v[0] * 1000)
             setMaxKms(v[1] * 1000)
           }}
-          max={400}
-          min={0}
-          defaultValue={[minKms / 1000, maxKms / 1000]}
-          value={[minKms / 1000, maxKms / 1000]}
-          minDistance={tickSize / 1000}
-          step={tickSize / 1000}
+          formatLabel={(v) => `${v} tkm`}
         />
         <span>max</span>
       </div>

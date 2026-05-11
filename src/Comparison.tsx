@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import 'react-select-search/style.css'
 import { Chart } from './chart'
 import { Selector } from './Selector'
 import { SelectedCar } from './types'
