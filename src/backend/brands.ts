@@ -5,6 +5,7 @@ export const brands: string[] = [
   'Chevrolet',
   'Chrysler',
   'Citroen',
+  'Cupra',
   'Dacia',
   'Daewoo',
   'Dodge',

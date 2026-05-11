@@ -6,21 +6,29 @@
 
 import { InspectionStats } from '../types'
 
+const log = (r: any) => {
+  console.log(r)
+  return r
+}
+
 export const processRawJsonDump = (
-  data: any
+  data: any,
 ): Record<string, Record<string, Record<string, InspectionStats>>> => {
   const nonSumRows = data.filter(
-    (d: any) => !d.key[1].includes('yhteensä') && !d.key[2].includes('yhteensä')
+    (d: any) =>
+      !d.key[1].includes('yhteensä') && !d.key[2].includes('yhteensä'),
   )
 
   const processedData = nonSumRows
-    //.filter((r: any) => r.key[1].includes("Volkswagen"))
+    // .filter((r: any) => r.key[1].includes('Toyota') && r.key[1].includes('IN'))
     .filter((r: any) => !isNaN(r.values[0]))
+    //.map(log)
     .map((r: any) => ({
       inspectionYear: r.key[0],
       model: r.key[1]
         .replaceAll('Tesla Motors', 'Tesla')
-        .replaceAll('GM Daewoo', 'Daewoo'),
+        .replaceAll('GM Daewoo', 'Daewoo')
+        .replaceAll(' - ', ' '),
       carYear: r.key[2],
       stat: r.key[3],
       value: Number(r.values[0]),

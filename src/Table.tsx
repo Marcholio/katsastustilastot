@@ -59,7 +59,7 @@ const Table = () => {
               <tr key={l[0]}>
                 <td>{i + 1}.</td>
                 <td>{l[0]}</td>
-                <td className="align-right">{l[1].toFixed(2)}</td>
+                <td className="align-right">{l[1]?.toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
